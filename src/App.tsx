@@ -3,7 +3,7 @@ import { useState } from 'react';
 import Todos from './components/Todos';
 import Todo from './models/todo';
 import NewTodo from './components/NewTodo';
-
+import { TodosContext } from './store/todos-context';
 function App() {
   const [todos,setTodo] = useState<Todo[]>([]);
   const addTodoHandler = (text: string) => {
@@ -19,10 +19,10 @@ function App() {
     })
   }
   return (
-    <div>
-      <NewTodo onAdd={addTodoHandler} />
-      <Todos items = {todos} onDelete={removeTodoHandler}/>
-    </div>
+    <TodosContext.Provider value = {{items:todos,addTodo:addTodoHandler,removeTodo:removeTodoHandler}}>
+      <NewTodo/>
+      <Todos/>
+    </TodosContext.Provider>
   );
 }
 
